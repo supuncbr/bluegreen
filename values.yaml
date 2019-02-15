@@ -1,0 +1,19 @@
+replicaCount: 1
+
+deploymentMethod: bluegreen
+  active: blue
+
+ingress:
+  strategicDomain: www.abc.com
+    name: www.abc.com
+    path: "/"
+    tls: true
+  tacticalDomain: www.abc.tech
+    name: www.abc.tech
+    path: "/"
+    tls: true
+  technicalDomain: www.abc.io
+    name: www.abc.io
+    path: "/"
+    tls: false
+

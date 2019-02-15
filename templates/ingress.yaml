@@ -1,0 +1,40 @@
+{{- if eq .Values.deploymentMethod "rolling-upgrade"}}
+{{- $fullName := .Release.Name -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-ingress
+  labels:
+    app: {{ template "blue-green.name" . }}
+    chart: {{ template "blue-green.chart" . }}
+    release: {{ .Release.Name }}
+spec:
+  rules:
+  {{- if .Values.ingress.strategicDomain.name }}
+  - host: {{ .Values.ingress.strategicDomain.name }}
+    http:
+      paths:
+        - path: {{ .Values.ingress.strategicDomain.path | defaul "/" }}
+          backend:
+            serviceName: {{ $fullName }}
+            servicePort: http
+  {{- end }}
+  {{- if .Values.ingress.tacticalDomain.name }}
+  - host: {{ .Values.ingress.tacticalDomain.name }}
+    http:
+      paths:
+        - path: {{ .Values.ingress.tacticalDomain.path | defaul "/" }}
+          backend:
+            serviceName: {{ $fullName }}
+            servicePort: http
+  {{- end }}
+  {{- if .Values.ingress.technicalDomain.name }}
+  - host: {{ .Values.ingress.technicalDomain.name }}
+    http:
+      paths:
+        - path: {{ .Values.ingress.technicalDomain.path | defaul "/" }}
+          backend:
+            serviceName: {{ $fullName }}
+            servicePort: http
+  {{- end }}
+{{- end }}
