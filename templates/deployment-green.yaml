@@ -1,4 +1,4 @@
-{{- if eq .Values.deploymentMethod "bluegreen"}}
+{{- if eq .Values.deployment.method "bluegreen"}}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:

@@ -1,4 +1,4 @@
-{{- if eq .Values.deploymentMethod "rolling-upgrade"}}
+{{- if eq .Values.deployment.method "rolling-upgrade"}}
 {{- $fullName := .Release.Name -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -14,7 +14,7 @@ spec:
   - host: {{ .Values.ingress.strategicDomain.name }}
     http:
       paths:
-        - path: {{ .Values.ingress.strategicDomain.path | defaul "/" }}
+        - path: {{ .Values.ingress.strategicDomain.path | default "/" }}
           backend:
             serviceName: {{ $fullName }}
             servicePort: http
@@ -23,7 +23,7 @@ spec:
   - host: {{ .Values.ingress.tacticalDomain.name }}
     http:
       paths:
-        - path: {{ .Values.ingress.tacticalDomain.path | defaul "/" }}
+        - path: {{ .Values.ingress.tacticalDomain.path | default "/" }}
           backend:
             serviceName: {{ $fullName }}
             servicePort: http
@@ -32,7 +32,7 @@ spec:
   - host: {{ .Values.ingress.technicalDomain.name }}
     http:
       paths:
-        - path: {{ .Values.ingress.technicalDomain.path | defaul "/" }}
+        - path: {{ .Values.ingress.technicalDomain.path | default "/" }}
           backend:
             serviceName: {{ $fullName }}
             servicePort: http
