@@ -1,8 +1,8 @@
-{{- if eq .Values.deployment.method "bluegreen"}}
+{{- if eq .Values.deployment.method "rolling-upgrade"}}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "blue-green.fullname" . }}-green
+  name: {{ template "blue-green.fullname" . }}
   namespace: {{ .Values.Namespace }}
   labels:
     release: {{ .Release.Name }}
@@ -15,10 +15,9 @@ spec:
       labels:
         app: {{ template "blue-green.name" . }}
         release: {{ .Release.Name }}
-        slot: green
     spec:
       containers:
-        - name: {{ template "blue-green.name" . }}-green
+        - name: {{ template "blue-green.name" . }}
           image: nginx:stable
           imagePullPolicy: IfNotPresent
           ports:
@@ -33,4 +32,4 @@ spec:
         - name: wwwdata-volume
           configMap:
             name: {{ template "blue-green.fullname" . }}
-{{- end }}
+{{- end}}

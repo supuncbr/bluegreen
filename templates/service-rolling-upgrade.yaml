@@ -1,9 +1,9 @@
-{{- if eq .Values.deployment.method "bluegreen"}}
+{{- if eq .Values.deployment.method "rolling-upgrade"}}
 {{- $fullName := .Release.Name -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $fullName }}-green
+  name: {{ $fullName }}
   namespace: {{ .Values.Namespace }}
   labels:
     app: {{ template "blue-green.name" . }}
@@ -19,5 +19,4 @@ spec:
   selector:
     app: {{ template "blue-green.name" . }}
     release: {{ .Release.Name }}
-    slot: green
-{{- end}}
+{{- end }}
