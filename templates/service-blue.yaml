@@ -4,7 +4,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ $fullName }}-blue
-  namespace: {{ .Values.Namespace }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ template "blue-green.name" . }}
     chart: {{ template "blue-green.chart" . }}
