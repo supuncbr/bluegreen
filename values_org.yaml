@@ -24,4 +24,4 @@ ingress:
   technicalDomain: 
     name: www.abc.io
     path: "/"
-    tls: true
+    tls: false
